@@ -16,6 +16,16 @@ enum ListRc {
 use crate::ListRc::{Cons as OtherCons, Nil as OtherNil};
 use std::rc::Rc;
 
+use std::cell::RefCell;
+
+// Tree
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    parent: RefCell<Weak<Node>>,
+    children: RefCell<Vec<Rc<Node>>>,
+}
+
 fn main() {
     let b = Box::new(6);
     println!("b = {b}");
@@ -96,6 +106,20 @@ fn main() {
         "Reference count after c goes out of scope = {}",
         Rc::strong_count(&a)
     );
+
+    // Tree
+    let leaf = Rc::new(Node {
+        value: 3,
+        children: RefCell::new(vec![]),
+    });
+
+    let branch = Rc::new(Node {
+        value: 5,
+        children: RefCell::new(vec![Rc::clone(&leaf)]),
+    });
+
+    println!("branch node: {:?}", branch);
+    println!("leaf node: {:?}", leaf);
 }
 
 struct MyBox<T>(T);
