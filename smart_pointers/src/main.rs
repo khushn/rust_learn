@@ -1,11 +1,20 @@
-
 #[derive(Debug)]
 enum MyList {
     Cons(i32, Box<MyList>),
-    Nil
+    Nil,
 }
 
 use crate::MyList::{Cons, Nil};
+
+// Reference counting Rc
+#[derive(Debug)]
+enum ListRc {
+    Cons(i32, Rc<ListRc>),
+    Nil,
+}
+
+use crate::ListRc::{Cons as OtherCons, Nil as OtherNil};
+use std::rc::Rc;
 
 fn main() {
     let b = Box::new(6);
@@ -27,7 +36,6 @@ fn main() {
     assert_eq!(5, x);
     assert_eq!(5, *y);
 
-
     let x = 5;
     let y = MyBox::new(x);
 
@@ -36,10 +44,9 @@ fn main() {
 
     let m = MyBox::new(String::from("Rust"));
 
-    // this is possible, i.e passing &m, instead of *m, because rust standard liberary 
+    // this is possible, i.e passing &m, instead of *m, because rust standard liberary
     // provided a deref of String to &str type
     hello(&m);
-
 
     // testing the Drop trait getting called
     let c = CustomSmartPointer {
@@ -60,10 +67,36 @@ fn main() {
     // c.drop();
     // instead call this
     drop(c);
-    
-    println!("CustomSmartPointer dropped before the end of main.");
-}
 
+    println!("CustomSmartPointer dropped before the end of main.");
+
+    // the Rc (reference count) lesson
+    let a = Rc::new(OtherCons(5, Rc::new(OtherCons(10, Rc::new(OtherNil)))));
+    println!(
+        "Reference count after creating a = {}",
+        Rc::strong_count(&a)
+    );
+
+    let b = OtherCons(3, Rc::clone(&a));
+    println!("Rc --> b: {:?}", b);
+    println!(
+        "Reference count after creating b = {}",
+        Rc::strong_count(&a)
+    );
+
+    {
+        let c = OtherCons(4, Rc::clone(&a));
+        println!("Rc --> c: {:?}", c);
+        println!(
+            "Reference count after creating c = {}",
+            Rc::strong_count(&a)
+        );
+    }
+    println!(
+        "Reference count after c goes out of scope = {}",
+        Rc::strong_count(&a)
+    );
+}
 
 struct MyBox<T>(T);
 
