@@ -79,6 +79,14 @@ fn main() {
 
     let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hi there!!"));
     takes_long_type(f);
+
+
+    // section 19.4 
+    // function pointers
+    println!("----function pointers passing to another function----");
+    let answer = do_twice(add_one, 5);
+
+    println!("The answer is: {answer}");
 }
 
 // advaned traits
@@ -165,4 +173,15 @@ impl fmt::Display for Point {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({}, {})", self.x, self.y)
     }
+}
+
+
+// section 19.4
+// function pointers
+fn add_one(x: i32) -> i32 {
+    x + 1
+}
+
+fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
+    f(arg) + f(arg)
 }
