@@ -66,6 +66,16 @@ fn main() {
                 continue;
             }
 
+            let prev = unique_numbers[index - 1];
+            if *&num > prev + 1 {
+                if cur_max > max {
+                    max = cur_max;
+                }
+                cur_beg = index;
+                cur_max = counts[&num];
+                continue;
+            }
+
             let diff = index - cur_beg;
             if diff >= k {
                 if cur_max > max {
@@ -77,17 +87,7 @@ fn main() {
                 cur_beg = cur_beg+1;
                 cur_max += counts[&num];
                 continue;
-            }
-
-            let prev = unique_numbers[index - 1];
-            if *&num > prev + 1 {
-                if cur_max > max {
-                    max = cur_max;
-                }
-                cur_beg = index;
-                cur_max = counts[&num];
-                continue;
-            }
+            }            
 
             cur_max += counts[&num];
         }
