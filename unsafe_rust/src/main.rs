@@ -80,8 +80,7 @@ fn main() {
     let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hi there!!"));
     takes_long_type(f);
 
-
-    // section 19.4 
+    // section 19.4
     // function pointers
     println!("----function pointers passing to another function----");
     let answer = do_twice(add_one, 5);
@@ -174,7 +173,6 @@ impl fmt::Display for Point {
         write!(f, "({}, {})", self.x, self.y)
     }
 }
-
 
 // section 19.4
 // function pointers

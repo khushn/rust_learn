@@ -120,6 +120,10 @@ fn main() {
 
     println!("branch node: {:?}", branch);
     println!("leaf node: {:?}", leaf);
+
+    // macros (defined in lib.rs)
+    let v: Vec<u32> = vec![1, 2, 3];
+
 }
 
 struct MyBox<T>(T);
