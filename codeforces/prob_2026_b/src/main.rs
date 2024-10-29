@@ -79,5 +79,8 @@ fn main() {
         // TODO: 
 
         // add max in the remaining 3 arrays, after 2 cuts. 
+        // array 1 range is 0..prev2+1 
+        // array 2 range is prev2+1..prev1+1
+        // array 3 range is prev1+1..n
     }
 }
