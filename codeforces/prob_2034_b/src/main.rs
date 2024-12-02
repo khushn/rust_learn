@@ -48,9 +48,33 @@ fn main() {
         );
         */
 
+        let mut res: usize = 0;
+
         let mut vec: Vec<usize> = Vec::new();
         let mut prevc: char = 'x';
         let mut cur_zero_len: usize = 0;
+
+        let chars: Vec<char> = binary_string.chars().collect();
+
+        let mut i: usize = 0;
+        while i < *n {
+            let mut c: char = chars[i];
+            if c == '0' {
+                cur_zero_len += 1;
+            } else {
+                cur_zero_len = 0;
+            }
+
+            if cur_zero_len >= *m {
+                res += 1;
+                i += k;
+                cur_zero_len = 0;
+            } else {
+                i += 1;
+            }
+        }
+
+        /*
         // Add your processing code here
         for (i, c) in binary_string.chars().enumerate() {
             //println!("Character at index {}: {}", i, c);
@@ -63,6 +87,8 @@ fn main() {
                 }
                 cur_zero_len = 0;
             }
+
+            if cur_zero_len == *m {}
         }
 
         if cur_zero_len >= *m {
@@ -70,8 +96,6 @@ fn main() {
         }
 
         //println!("vec: {:?}", vec);
-
-        let mut res: usize = 0;
 
         for (i, g) in vec.into_iter().enumerate() {
             //println!("g: {:?}", g);
@@ -84,6 +108,7 @@ fn main() {
             //println!("num: {:?}, denom: {:?}, t: {:?}", num, denom, t);
             res += t;
         }
+        */
 
         println!("{:?}", res);
     }
