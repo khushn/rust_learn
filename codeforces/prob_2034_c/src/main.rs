@@ -22,11 +22,10 @@ fn main() {
             maze.push(row.chars().collect());
         }
 
-
         // Print test case for debugging (optional)
         //println!("Test Case {}: n = {}, m = {}", test_case, n, m);
         for row in &maze {
-        	// println!("{:?}", row);
+            // println!("{:?}", row);
         }
 
         let mut data: Vec<Vec<usize>> = vec![vec![0; m]; n];
@@ -47,57 +46,43 @@ fn main() {
                 if maze[i][j] == '?' {
                     let mut outway: usize = 0;
 
-                    match i {
-                        0 => {
-                            outway += 1;
-                        }
-
-                        _ => {
-                            if i == n - 1 {
-                                outway += 1;
-                            }
-
-                            if j > 0 && data[i][j - 1] == 1 {
-                                outway += 1;
-                            }
-
-                            if j < m - 1 && data[i][j + 1] == 1 {
-                                outway += 1;
-                            }
-                        }
-                    }
-
-                    match j {
-                        0 => {
-                            outway += 1;
-                        }
-
-                        _ => {
-                            if j == m - 1 {
-                                outway += 1;
-                            }
-
-                            if i > 0 && data[i - 1][j] == 1 {
-                                outway += 1;
-                            }
-
-                            if i < n - 1 && data[i + 1][j] == 1 {
-                                outway += 1;
-                            }
-                        }
-                    }
-
-                    if n == 1 {
+                    if i == 0 {
                         outway += 1;
                     }
 
-                    if m == 1 {
+                    if j == 0 {
+                        outway += 1;
+                    }
+
+                    if i == n - 1 {
+                        outway += 1;
+                    }
+
+                    if j > 0 && data[i][j - 1] == 1 {
+                        outway += 1;
+                    }
+
+                    if j < m - 1 && data[i][j + 1] == 1 {
+                        outway += 1;
+                    }
+
+                    if j == m - 1 {
+                        outway += 1;
+                    }
+
+                    if i > 0 && data[i - 1][j] == 1 {
+                        outway += 1;
+                    }
+
+                    if i < n - 1 && data[i + 1][j] == 1 {
                         outway += 1;
                     }
 
                     if outway == 4 {
                         data[i][j] = 1;
                     }
+
+                    //println!("processing '?'s i:{:?}, j:{:?}, outway: {:?}", i, j, outway);
                 }
             }
         }
