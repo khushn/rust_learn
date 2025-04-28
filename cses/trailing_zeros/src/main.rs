@@ -2,9 +2,13 @@ use std::io::{self, BufRead};
 
 /*
 Logic:
-Loop 1 to n , remove trailing zeros of each no. and add to count.
-Preserve only the last digit after multiplying. If multiplication results in a new trailing zero,
-account for it and remove it
+Loop 1 to n , just look for multiples of 5. but it was slow.
+
+
+Improved logic: Just dicide by 5, then by 25, then by 125 ad so on till the divisor is below n
+
+The reason it should work is 2s are always more than 5. And 2x5 create trailing zeros. Nothing less. 
+Even numbers like 100, 1000 etc, yield to the above in this way.
 */
 fn main() {
     let stdin = io::stdin();
@@ -15,14 +19,15 @@ fn main() {
 
     let mut num_trailing_zeros: u32 = 0;
     let mut mult: u64 = 1;
-    for num in 2..=n {
-        //println!("processing num: {:?}", num);
-        let mut i = num;
-        while i % 5 == 0 {
-            i = i / 5;
-            num_trailing_zeros += 1;
-        }
+    
+        
+    let mut divisor: u32 = 5;
+    while divisor <= n {
+    	num_trailing_zeros += n / divisor;
+    	//println!("intermidiate val with divisor: {:?} is {:?}", divisor, num_trailing_zeros);
+    	divisor *= 5;
     }
+    
 
     println!("{:?}", num_trailing_zeros);
 }
