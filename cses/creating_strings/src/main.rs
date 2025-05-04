@@ -74,6 +74,9 @@ fn process_map_and_string(my_map: &mut HashMap<char, i32>, my_str: String) {
     	vec.push(k.clone());
     }
 
+    // this may be costly, but we need to do print the permutations in alphabetical order
+    vec.sort();
+
     for v in vec {
     	update_or_remove_count(my_map, v);
     	//println!("after deleting {} from map: {:?}", v, my_map);
